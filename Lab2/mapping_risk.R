@@ -197,7 +197,7 @@ tm_shape(covid_zip_rr) +
             title.position = c(0.12, .85),  
             title.fontfamily = "Avenir",
             frame = FALSE) +
-  tm_credits("Author: Joel Capellan \nSource: NYC Health \nDate:",
+  tm_credits("Author: Sharon Kulali \nSource: NYC Health \nDate: September 19, 2023",
                         size = .7,
                         position = c(.66,.04))
 
@@ -224,12 +224,32 @@ tm_shape(covid_zip_rr) +
             title.position = c(0.12, .85),  
             title.fontfamily = "Avenir",
             frame = FALSE) +
-  tm_credits("Author: Joel Capellan \nSource: NYC Health \nDate:",
+  tm_credits("Author: Sharon Kulali \nSource: NYC Health \nDate: September 19, 2023",
              size = .7,
              position = c(.66,.04)) -> excess_risk
 
+# Arrange the maps in a single figure
+  tmap_arrange(death_rates, excess_risk,
+               ncol = 2,
+               asp = 0.9) -> arranged_image
+
+# Save object as png
+  tmap_save(arranged_image,
+          filename = "death.png",
+          dpi = 300,
+          width = 10,
+          height = 7)
 
 
+
+
+# Additional Stuff
+  
+# Save map 
+ggsave(combined_cow,
+       width = 18, 
+       height = 10,
+       file = "risk.jpeg")
 
 # Turn tmap objects into cowplot objects
 tmap_grob(death_rates) -> rates_cow
@@ -262,14 +282,6 @@ plot_grid(title,
           plot_row,
           ncol = 1,
           rel_heights = c(.2,1)) -> combined_cow
-
-# Save map 
-ggsave(combined_cow,
-         width = 18, 
-         height = 10,
-         file = "risk.jpeg")
-
-
 
 
 
