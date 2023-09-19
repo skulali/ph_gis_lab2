@@ -22,7 +22,7 @@ setwd("C:/Users/Kulal/OneDrive - Columbia University Irving Medical Center/Fall 
 
 
 # Read-in shapefile 
-zip_nyc <- st_read("MODZCTA_2010.shp")
+zip_nyc <- st_read("Lab2/MODZCTA_2010.shp")
 
 str(zip_nyc)
 glimpse(zip_nyc)
@@ -32,7 +32,10 @@ tm_shape(zip_nyc) +
   tm_polygons()
 
 # Read-in data
-covid <- read_csv("data-by-modzcta.csv")
+covid <- read_csv("Lab2/data-by-modzcta.csv")
+
+glimpse(covid)
+head(covid)
 str(covid)
 summary(covid)
 
@@ -42,6 +45,7 @@ covid_zip <- merge(zip_nyc, covid,
                         by.x = "MODZCTA",
                         by.y = "modified_ZCTA")
 
+head(covid_zip)
 
 # Generate rate and RR
 covid_zip %>% 
@@ -49,6 +53,7 @@ covid_zip %>%
          expected = population*(35253/8336817),
          RR = death_count/expected) -> covid_zip_rr
 
+head(covid_zip_rr)
 
 # Death Rate map 
 
@@ -113,7 +118,7 @@ tm_shape(covid_zip_rr) +
   tm_scale_bar(position = c(0.32, 0.04))
 
 
-# Step 4: Save in object
+# Step 5: Save in object
 
 tm_shape(covid_zip_rr) +
   tm_polygons(col = "rate",
